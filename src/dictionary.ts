@@ -39,3 +39,24 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
         });
     }
 });
+
+export const wordExists = async (word: string) => {
+    await ensureLoaded();
+    
+    return !!entries[word];
+}
+
+export const findByRegex = async (regex: RegExp, maxResults = 100) => {
+    await ensureLoaded();
+
+    let result: string[] = [];
+    for (const word of words) {
+        if (regex.test(word))
+          result.push(word);
+
+        if (result.length >= maxResults)
+          break;
+    }
+
+    return words;
+}
