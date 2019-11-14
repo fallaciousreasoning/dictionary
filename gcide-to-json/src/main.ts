@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { JSDOM } from 'jsdom';
 
-const inputFile = "../gcide/CIDE.A";
+const inputFile = "../gcide/CIDE.X";
 
 const loadFileToDom = (fileName: string) => {
     const text = fs.readFileSync(fileName);
