@@ -4,12 +4,16 @@
   "description": "Convert gcide xml to json",
   "main": "main.ts",
   "scripts": {
+    "start": "ts-node src/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jsdom": "^12.2.4",
+    "@types/node": "^12.12.7",
     "jsdom": "^15.2.1",
-    "ts-node": "^8.5.0"
+    "ts-node": "^8.5.0",
+    "typescript": "^3.7.2"
   }
 }
