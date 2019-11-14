@@ -68,7 +68,7 @@ window['findByWildcard'] = findByWildCard;
 
 export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
     if (typeof regex === 'string')
-        regex = new RegExp(regex);
+        regex = new RegExp(regex, 'i');
 
     await ensureLoaded();
 
