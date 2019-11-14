@@ -6,7 +6,9 @@ const letters = "A";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const outputFile = `dictionary.json`
 
 const loadFileToDom = (fileName: string) => {
-    const text = fs.readFileSync(fileName);
+    const text = fs.readFileSync(fileName).toString()
+        // GCIDE doesn't escape their breaks properly.
+        .replace(/<br\//g, "<br>");
     const dom = new JSDOM(text); 
     return dom.window.document;
 }
@@ -17,6 +19,7 @@ const saveToJson = (fileName: string, definitions: Definition[]) => {
 }
 
 const parseDefinition = (fromParagraph: Element): Definition => {
+    fromParagraph.outerHTML = fromParagraph.outerHTML.replace(/\<br\//g, "<br>");
     const word = fromParagraph.querySelector('ent');
     if (!word)
       return;
@@ -26,6 +29,9 @@ const parseDefinition = (fromParagraph: Element): Definition => {
     const partOfSpeech = fromParagraph.querySelector('pos');
     const definitions = fromParagraph.querySelectorAll('def');
     const synonyms = fromParagraph.querySelectorAll('syn');
+    if (word.innerHTML == "0") {
+        console.log("Found synonyms!", fromParagraph.outerHTML);
+    }
     const antonyms = fromParagraph.querySelectorAll('ant');
     const alternateSpellings = fromParagraph.querySelectorAll('asp');
 
