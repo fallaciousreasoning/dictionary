@@ -1,0 +1,332 @@
+File pronunc.txt
+================
+   This file gives a number of examples of pronunciation, 
+using the entity symbols representing the pronunciations as
+found in the 1913 Webster unabridged dictionary.  Not all
+vowel sounds are given here, but the examples should allow one 
+to recognize the characters and recall the symbols used to 
+represent them.  The set of symbols used for pronunciation 
+is different from that used in most modern dictionaries,
+but a more worrisome problem is that the pronunciations themselves 
+seem in many cases to differ from modern usage.  The places of
+the strong and weak accent are, however, in every case
+examined, the same as in modern dictionaries.  Anyone who is 
+willing to work at revising the pronunciations to reflect modern
+usage or modern symbols should contact PJC.
+
+
+         Pronunciations  in the 1913 Webster ASCII version
+         =================================================
+
+Syllables:
+----------------
+    in pronunciations, the short hyphen used in the printed version as a 
+syllable-break is represented in the ASCII version by an asterisk (*).
+    the main (heavy) accent is represented by a double-quote (").
+    the secondary (light) accent is represented by a left-single-quote
+(grave accent) (`)
+    the hyphen in hyphenated words is represented by the ASCII hyphen (-).
+    where an accent occurs, no other syllable break is used.
+    sometimes a hyphen occurs after an accent.
+    ------------------------------------------------
+
+Consonants:
+    Most consonants have their normal value in the pronunciations,
+but there are a few special characters, as the n-submacron and the
+"th" ligature.  See the end of the "special characters" section.
+
+Special characters:
+--------------------
+   The special characters are represented by two different sets of
+symbols: (1) the RTF-format hexadecimal codes such as \'94 for
+o-umlaut, meaning that the byte code is hexadecimal 94.  These
+are used only for those symbols which have been designed into a 
+special font set for this dictionary.  The font set can only be used
+in a DOS system; or
+(2) an "entity" symbol  using "<" and "/" as opening and closing
+delimiters, with a mnemonic string between.  In the case of o-umlaut 
+the symbol is <oum/.  For the vowels, the system is consistent,
+thus <aum/ is a-umlaut, and <ium/ is i-umlaut, etc.
+   These delimiters are used in preference to the HTML-style
+(e.g. &auml;) delimiters because of the heavy use of ampersands in
+the dictionary, to minimize file length.  For the same reason,
+the codes within the delimiters are generally shorter than the 
+corresponding ISO 8879 codes ( <aum/ rather than &auml; ).
+   For this discussion, I will use the "entity" coding.  The
+equivalent hexadecimal codes, where they exist, will be found in
+the tables in the file "webfont.asc".
+
+   The pronunciation system of the 1913 Webster has three peculiarities
+relative to systems used in recent dictionaries.
+(1) a more complex set of symbols are used. This is evident, for
+    example, where the long vowels have different symbols whether
+    they are used in stressed or unstressed syllables.  Thus
+    long a in "acre" or "chaos" is represented as a-macron (<amac/ in 
+    our notation).  But in "chaotic" or "connate" or "comate" it is 
+    represented as a symbol looking like a-macron, but with a short 
+    ascender in the middle of the macron above the a.  This is denoted 
+    <asl/ ("a semilong") in our notation.
+
+    Also, some sounds have more than one symbol.  Thus, there are several
+    symbols using "y" with a diacritical mark above, representing
+    identical sounds using "i" or "e", but used in those cases where the
+    written word has a "y" in it.  So words ending in "y" with 
+    pronunciations like the unaccented long "e" usually have 
+    a y-breve (<ycr/) in the pronunciation.  Why?
+
+(2) The indicated pronunciations themselves are in some cases 
+    different from what one would find in a modern dictionary.
+    In part this is due to differences among orthoepists with
+    different notions of how a word should sound, and possibly
+    it is due to differences in the pronunciation between 1890,
+    when British pronunciations may have had more influence, and 
+    the present.  Thus we see that words ending in -"ties",
+    which are given the pronunciation "-t<icr/z", which sounds
+    like "tizz", whereas I have always heard such words pronounced
+    with a long "e", as in "teez".   In Webster's 10th collegiate, they 
+    mention that unstressed long e may be pronounced as i in
+    southern British or southern US dialects, and perhaps it
+    was more common in the US in 1890.  The <icr/ is an unreliable
+    indicator of modern standard American pronunciation.
+
+(3)  The indefinite value, represented by an upside-down e (called
+     the "schwa" is not used, the same sound being represented by
+     symbols like short u <ucr/, or sometimes other vowels. 
+
+    So be warned, the pronunciations may not be quite what one would
+    expect.  But for this effort, we are trying to reproduce exactly
+    the pronuciations in the original work.
+
+    Notice that in pronunciations, vowels that are obscured are often
+      represented by the italicised vowel without any diacritical marks;
+      these italicised vowels are represented as either <ait/, <eit/, etc.
+      or with an <it> tag, as in  m<it>e</it>nt
+   Thus "Christian" is represented as  kr<icr/s"ch<it>a</it>n
+        communicant is represented as  k<ocr/m*m<umac/"n<icr/*k<ait/nt
+
+
+   Some examples of pronunciations follow:
+      for further explanations of the entities, see the file "webfont.asc"
+   ==============================================================
+
+   <amac/ long a (stressed)  (a with a macron above it) 
+          late          =  l<amac/t
+          later         =  l<amac/t"<etil/r
+          comb-shaped   =  k<omac/m"-sh<amac/pt`
+          commemorate   =  k<ocr/m*m<ecr/m"<osl/*r<amac/t
+          deign         =  d<amac/n
+          deflate       =  d<esl/*fl<amac/t"
+          defray        =  d<esl/*fr<amac/"
+          defrayal      =  d<esl/*fr<amac/"<ait/l
+
+
+   <asl/  long a (unstressed)     
+          commodate     =  k<ocr/m"m<osl/*d<asl/t
+          cometary      =  k<ocr/m"<ecr/t*<asl/*r<ycr/
+
+   <ait/  italic a
+          communicant   =  k<ocr/m*m<umac/"n<icr/*k<ait/nt
+          defeasance    =  d<esl/*f<emac/"z<ait/ns
+          commercial    =  k<ocr/m*m<etil/r"sh<ait/l
+          compass       =  k<ucr/m"p<ait/s
+
+   <acr/  short a         (a with a crescent [breve] above it)
+          adipose       =  <acr/d"<icr/*p<omac/s
+          absolve       =  <acr/b*s<ocr/lv"
+          land          =  l<acr/nd
+          lamp          =  l<acr/mp
+          
+   <adot/ short a       (a with a dot above it)
+          again         =  <adot/*g<ecr/n"
+          carouse       =  k<adot/*rouz"
+          coma          =  k<omac/"m<adot/
+          comma         =  k<ocr/m"m<adot/        |  *These sound different
+          command       =  k<ocr/m*m<adot/nd"     |    to me
+          mass          =  m<adot/s
+          mash          =  m<adot/sh
+          mat           =  m<adot/t
+
+   <acir/ a-circumflex ("only in syllables closed by r")
+          care          =  k<acir/r
+          chair         =  ch<acir/r
+          share         =  sh<acir/r
+          compare       =  k<ocr/m*p<acir/r"
+
+   <aum/  a-umlaut  (in pronunciations not the same as in words)
+          arsenic       =  <aum/r"s<esl/*n<icr/k
+          arson         =  <aum/r"s'n
+          arm           =  <aum/rm
+          carp          =  k<aum/rp
+          far           =  f<aum/r
+          mar           =  m<aum/r
+          compart       =  k<ocr/m*p<aum/rt"
+          compartment   =  k<ocr/m*p<aum/rt"m<eit/nt
+
+   <add/ a double dot   ( with a double dot *below*)
+          all           =  <add/l
+          talk          =  t<add/k
+          swarm         =  sw<add/rm                 [not aum??]
+          water         =  w<add/"t<etil/r
+          default       =  d<esl/*f<add/lt"
+          defraud       =  d<esl/*fr<add/d"
+          deerstalker   =  d<emac/r"st<add/k`<etil/r
+
+
+   <eacute/  e-acute      (e with an acute accent over it --
+                           not used in pronunciations, but in the
+                           spelling of words derived from European
+                           languages,  especially French.)
+          prot<eacute/g<eacute/    =  pr<osl/`t<asl/`zh<asl/"
+
+   <ecr/  short e         (e with a crescent [breve] above it)
+          degenerate    =  d<esl/*j<ecr/n"<etil/r*<amac/t
+          delve         =  d<ecr/lv
+          end           =  <ecr/nd
+          pet           =  p<ecr/t
+          ten           =  t<ecr/n
+
+   <esl/  long e (unstressed)
+          committee     =  k<ocr/m*m<icr/t"t<esl/
+          defame        =  d<esl/*f<amac/m"
+          define        =  d<esl/*f<imac/n"
+          comedy        =  k<ocr/m"<esl/*d<ycr/
+
+   <eit/  e italic
+          compartment   =  k<ocr/m*p<aum/rt"m<eit/nt
+          -ment         =  -"m<eit/nt       (for most -ment endings)
+
+   <emac/ e macron (long e, stressed)
+          compeer       =  k<ocr/m*p<emac/r"
+          deer          =  d<emac/r"
+
+   <etil/ e-tilde  
+              (representing the e before r in many words)
+              (for the same sound in -ur words, <ucir/ is used!)
+          fern          =  f<etil/rn
+          commercial    =  k<ocr/m*m<etil/r"sh<ait/l
+          commerce      =  k<ocr/m"m<etil/rs
+
+   <eum/ e-umlaut  (e-diaeresis)
+              (not used in pronunciations.
+                          represents e after another e, used in the 1913
+                          Webster to indicate that the two e's are
+                          pronounced as two vowels, as in "reentry". 
+                          In the supplemented version, the second e,
+                          which is thus marked in the 1913 version, 
+                          usually has no umlaut over it, conforming
+                          to modern orthographic practise.)
+
+         re<eum/nforce  =  r<emac/`<ecr/n*f<omac/rs"
+         re<eum/entry   =  r<emac/`<ecr/n"tr<ycr/
+
+   <icr/  short i         (i with a crescent [breve] above it)
+                          Note: In most cases, this is used where the
+                           short i sound of "lip" is intended, but it is
+                           also used in the middle of words where Americans
+                           use an unstressed long "e" sound,  (as the
+                           "i" in "serial" and "serious")!?
+                            and also in  words ending in "ies",
+                              coded as "<icr/z" (as in liberties)
+          lip           =  l<icr/p
+          pin           =  p<icr/n
+          commission    =  k<ocr/m*m<icr/sh"<ucr/n
+          committal     =  k<ocr/m*m<icr/t"t<ait/l
+         *serial        =  s<emac/"r<icr/*<ait/l
+         *serious       =  s<emac/"r<icr/*<ucr/s
+          liberty       =  l<icr/b"<etil/r*t<ycr/
+ *but:    liberties     =  l<icr/b"<etil/r*t<icr/z
+
+   <imac/ i-macron (long i, stressed)  (i with a macron above it) 
+          combine       =  k<ocr/m*b<imac/n"
+          combined      =  k<ocr/m*b<imac/"nd
+
+   <isl/  long i (unstressed)
+          diameter      =  d<isl/*<acr/m"<esl/*t<etil/r
+          diagonal      =  d<isl/*<acr/g"<osl/*n<ait/l
+
+
+   <ocr/  short o         (o with a crescent [breve] above it)
+          colossus      =  k<osl/*l<ocr/s"s<ucr/s
+          commute       =  k<ocr/m*m<umac/t"
+   
+   <omac/ o-macron (long o, stressed)  (o with a macron above it) 
+          boat          =  b<omac/t
+          colt          =  k<omac/lt
+          comb          =  k<omac/m
+          combing       =  k<omac/m"<icr/ng
+          commode       =  k<ocr/m*m<omac/d"
+          course        =  k<omac/rs
+
+   <ocir/ o-circumflex ("only in syllables closed by r")
+          orb           =  <ocir/rb
+          lord          =  l<ocir/rd
+          lordship      =  l<ocir/rd"sh<icr/p
+          lorn          =  l<ocir/rn
+          cord          =  k<ocir/rd
+          commorse      =  k<ocr/m*m<ocir/rs"
+          deform        =  d<esl/*f<ocir/rm"
+          deformed      =  d<esl/*f<ocir/rmd"
+          dehortative   =  d<esl/*h<ocir/rt"<adot*t<icr/v
+
+   <osl/  "o semilong" (long o, unstressed)          
+          diagonal      =  d<isl/*<acr/g"<osl/*n<ait/l
+          dejectory     =  d<esl/*j<ecr/k"t<osl/*r<ycr/
+
+   <oomac/ oo-macron (an oo with a macron above both o's)
+          boom          =  b<oomac/m
+          boot          =  b<oomac/t
+          boost         =  b<oomac/st
+          commove       =  k<ocr/m*m<oomac/v"
+   
+   <oomcr/ oo-crescent (an oo with a crescent [breve] above both o's)
+          foot          =  f<oocr/t
+          cook          =  k<oocr/k
+
+   <umac/  u macron (long u)
+          commute       =  k<ocr/m*m<umac/t"
+          definitude    =  d<esl/*f<icr/n"<icr/*t<umac/d 
+          communicant   =  k<ocr/m*m<umac/"n<icr/*k<ait/nt
+          defuse        =  d<esl/*f<umac/z"
+
+   <ucr/  short u         (u with a crescent [breve] above it)
+          come          =  k<ucr/m
+          color         =  k<ucr/l"<etil/r
+          colored       =  k<ucr/l"<etil/rd
+          Columbia      =  k<osl/*l<ucr/m"b<icr/*<adot/
+          up            =  <ucr/p
+
+   <ycr/  y-crescent  (y with a crescent [breve] above it)
+          used mostly for y-endings (supposed to sound similar to <icr/!!)
+            sounds to me like an unstressed long e 
+          comedy        =  k<ocr/m"<esl/*d<ycr/
+          comely        =  k<ucr/m"l<ycr/
+          liberty       =  l<icr/b"<etil/r*t<ycr/
+
+   <ymac/ y-macron  (y with a macron above it) 
+            used to represent the long i (stressed) sound, but
+               examples in pronunciations seem to be absent.  It is
+               found in some foreign words in the etymologies.
+
+   ou     the common "ow" sound of "town", "browse"
+          count       =  kount
+
+   <nsm/  n-submacron  (an n with a macron underneath)
+           represents the "ng" sound when it occurs before a
+             consonant
+          defunct      =  d<esl/*f<ucr/<nsm/kt"
+          commingle    =  k<ocr/m*m<icr/<nsm/"g'l
+
+  <th/    the "th" sound in "mother"
+            this is represented in the printed work by a th ligature
+         carouse      =   k<adot/*rouz"
+
+   zh     not a special character, but used to represent the 
+             "si" sound in words like
+
+          decision   =  d<esl/*s<icr/zh"<ucr/n
+
+   th     the usual sound as in thing and thorn
+   sh     the usual as in ship
+   ch     the usual as in chip
+   N      (capital N) represents the nasal "n" sound of the French language
+
