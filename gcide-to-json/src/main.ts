@@ -14,7 +14,7 @@ const loadFileToDom = (fileName: string) => {
 }
 
 const saveToJson = (fileName: string, definitions: Definition[]) => {
-    const json = JSON.stringify(definitions, null, 4);
+    const json = JSON.stringify({ words: definitions }, null, 4);
     fs.writeFileSync(fileName, json);
 }
 
@@ -29,9 +29,6 @@ const parseDefinition = (fromParagraph: Element): Definition => {
     const partOfSpeech = fromParagraph.querySelector('pos');
     const definitions = fromParagraph.querySelectorAll('def');
     const synonyms = fromParagraph.querySelectorAll('syn');
-    if (word.innerHTML == "0") {
-        console.log("Found synonyms!", fromParagraph.outerHTML);
-    }
     const antonyms = fromParagraph.querySelectorAll('ant');
     const alternateSpellings = fromParagraph.querySelectorAll('asp');
 

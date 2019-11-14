@@ -5,6 +5,8 @@
   "dependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
+    "JSONStream": "^1.3.5",
+    "fetch-readablestream": "^0.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
