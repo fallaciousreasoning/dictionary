@@ -1,8 +1,9 @@
 import * as fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { Definition } from './definition';
+import * as JSONStream from 'JSONStream';
 
-const letters = "A";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const outputFile = `dictionary.json`
 
 const loadFileToDom = (fileName: string) => {
@@ -44,9 +45,8 @@ const parseDefinition = (fromParagraph: Element): Definition => {
     }
 }
 
-const definitions: Definition[] = [];
-
-const addDefinitionsForLetter = (letter: string) => {
+const getDefinitionsFor = (letter: string) => {
+    const definitions = [];
     const inputFile = `../gcide/CIDE.${letter}`;
     const document = loadFileToDom(inputFile);
     const paragraphs = document.querySelectorAll('body > * > p');
@@ -57,13 +57,24 @@ const addDefinitionsForLetter = (letter: string) => {
     
         definitions.push(definition);
     }
+    return definitions;
 }
+
+// Start JSON file
+fs.writeFileSync(outputFile, `{ "words": [\n`);
 
 for (const letter of letters) {
     console.log("Parsing", letter);
-    addDefinitionsForLetter(letter);
-    console.log("Parsed", letter);
+    const definitions = getDefinitionsFor(letter);
+    console.log("Parsed!");
+
+    console.log("Saving...");
+    for (const definition of definitions) {
+        fs.appendFileSync(outputFile, JSON.stringify(definition) + ',\n');
+    }
+    console.log("Saved!")
 }
 
-saveToJson(outputFile, definitions);
+// End json file
+fs.appendFileSync(outputFile, "\n] }");
 
