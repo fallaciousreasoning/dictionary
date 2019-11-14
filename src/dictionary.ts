@@ -18,6 +18,8 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
         return;
     }
 
+    const wordsSet = new Set<string>();
+
     const dictionaryResponse = await fetch('/dictionary.json');
     if (!dictionaryResponse.body) {
         reject("Response had no body!");
@@ -26,7 +28,7 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
 
     const stream = JSONStream.parse("words.*");
     stream.on('data', entry => {
-        words.push(entry.word);
+        wordsSet.add(entry.word);
         entries[entry.word] = entry;
     });
 
@@ -38,8 +40,10 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
             const text = new TextDecoder("utf-8").decode(value);
             stream.write(text);
 
-            if (done)
+            if (done) {
+                words.push(...Array.from(wordsSet));
                 resolve();
+            }
 
             return done;
         });
@@ -77,6 +81,6 @@ export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
             break;
     }
 
-    return result;
+    return result.map(r => entries[r]);
 }
 window['findByRegex'] = findByRegex;
