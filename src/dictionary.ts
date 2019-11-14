@@ -17,7 +17,7 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
         resolve();
         return;
     }
-    
+
     const dictionaryResponse = await fetch('/dictionary.json');
     if (!dictionaryResponse.body) {
         reject("Response had no body!");
@@ -52,6 +52,16 @@ export const wordExists = async (word: string) => {
     return !!entries[word];
 }
 
+export const findByWildCard = (search: string) => {
+    const regexString = search
+        // * ==> (.*)
+        .split('*').join('.*')
+        // ? ==> .
+        .split('?').join('.');
+    return findByRegex(regexString);
+}
+window['findByWildcard'] = findByWildCard;
+
 export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
     if (typeof regex === 'string')
         regex = new RegExp(regex);
@@ -61,10 +71,10 @@ export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
     let result: string[] = [];
     for (const word of words) {
         if (regex.test(word))
-          result.push(word);
+            result.push(word);
 
         if (result.length >= maxResults)
-          break;
+            break;
     }
 
     return result;
