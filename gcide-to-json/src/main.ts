@@ -2,13 +2,8 @@ import * as fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { Definition } from './definition';
 
-const letter = "X"
-const inputFile = `../gcide/CIDE.${letter}`;
-const outputFile = `output/${letter}.json`
-
-if (!fs.existsSync('output')) {
-    fs.mkdirSync('output');
-}
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const outputFile = `dictionary.json`
 
 const loadFileToDom = (fileName: string) => {
     const text = fs.readFileSync(fileName);
@@ -38,15 +33,25 @@ const parseDefinition = (fromParagraph: Element): Definition => {
     }
 }
 
-const document = loadFileToDom(inputFile);
-const paragraphs = document.querySelectorAll('body > * > p');
-const definitions = [];
-for (const paragraph of paragraphs) {
-    const definition = parseDefinition(paragraph);
-    if (!definition)
-      continue;
-      
-    definitions.push(definition);
+const definitions: Definition[] = [];
+
+const addDefinitionsForLetter = (letter: string) => {
+    const inputFile = `../gcide/CIDE.${letter}`;
+    const document = loadFileToDom(inputFile);
+    const paragraphs = document.querySelectorAll('body > * > p');
+    for (const paragraph of paragraphs) {
+        const definition = parseDefinition(paragraph);
+        if (!definition)
+          continue;
+    
+        definitions.push(definition);
+    }
+}
+
+for (const letter of letters) {
+    console.log("Parsing", letter);
+    addDefinitionsForLetter(letter);
+    console.log("Parsed", letter);
 }
 
 saveToJson(outputFile, definitions);
