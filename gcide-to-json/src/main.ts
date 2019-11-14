@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { Definition } from './definition';
 
-const letters = "X";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const letters = "A";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const outputFile = `dictionary.json`
 
 const loadFileToDom = (fileName: string) => {
@@ -23,13 +23,21 @@ const parseDefinition = (fromParagraph: Element): Definition => {
 
     const headword = fromParagraph.querySelector('hw');
     const pronunciation = fromParagraph.querySelector('pr');
+    const partOfSpeech = fromParagraph.querySelector('pos');
     const definitions = fromParagraph.querySelectorAll('def');
+    const synonyms = fromParagraph.querySelectorAll('syn');
+    const antonyms = fromParagraph.querySelectorAll('ant');
+    const alternateSpellings = fromParagraph.querySelectorAll('asp');
 
     return {
         word: word && word.innerHTML,
         definitions: Array.from(definitions).map(m => m.innerHTML),
         headword: headword && headword.innerHTML,
-        pronunciation: pronunciation && pronunciation.innerHTML
+        pronunciation: pronunciation && pronunciation.innerHTML,
+        partOfSpeech: partOfSpeech && partOfSpeech.innerHTML,
+        synonyms: Array.from(synonyms).map(s => s.innerHTML),
+        antonyms: Array.from(antonyms).map(a => a.innerHTML),
+        alternateSpellings: Array.from(alternateSpellings).map(a => a.innerHTML)
     }
 }
 
