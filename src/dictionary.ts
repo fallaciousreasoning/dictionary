@@ -12,6 +12,12 @@ export const entries: {
 window['entries'] = entries;
 
 export const ensureLoaded = () => new Promise(async (resolve, reject) => {
+    // If we have words, return.
+    if (words.length) {
+        resolve();
+        return;
+    }
+    
     const dictionaryResponse = await fetch('/dictionary.json');
     if (!dictionaryResponse.body) {
         reject("Response had no body!");
@@ -42,11 +48,14 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
 
 export const wordExists = async (word: string) => {
     await ensureLoaded();
-    
+
     return !!entries[word];
 }
 
-export const findByRegex = async (regex: RegExp, maxResults = 100) => {
+export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
+    if (typeof regex === 'string')
+        regex = new RegExp(regex);
+
     await ensureLoaded();
 
     let result: string[] = [];
@@ -58,5 +67,6 @@ export const findByRegex = async (regex: RegExp, maxResults = 100) => {
           break;
     }
 
-    return words;
+    return result;
 }
+window['findByRegex'] = findByRegex;
