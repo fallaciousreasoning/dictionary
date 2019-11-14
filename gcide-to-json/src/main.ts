@@ -1,9 +1,7 @@
 import * as fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { Definition } from './definition';
-import * as JSONStream from 'JSONStream';
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const outputFile = `dictionary.json`
 
 const loadFileToDom = (fileName: string) => {
@@ -11,7 +9,7 @@ const loadFileToDom = (fileName: string) => {
         // GCIDE doesn't escape their breaks properly.
         .replace(/<br\//g, "<br>");
     const dom = new JSDOM(text); 
-    return dom.window.document;
+    return dom;
 }
 
 const saveToJson = (fileName: string, definitions: Definition[]) => {
@@ -34,21 +32,23 @@ const parseDefinition = (fromParagraph: Element): Definition => {
     const alternateSpellings = fromParagraph.querySelectorAll('asp');
 
     return {
-        word: word && word.innerHTML,
-        definitions: Array.from(definitions).map(m => m.innerHTML),
-        headword: headword && headword.innerHTML,
-        pronunciation: pronunciation && pronunciation.innerHTML,
-        partOfSpeech: partOfSpeech && partOfSpeech.innerHTML,
-        synonyms: Array.from(synonyms).map(s => s.innerHTML),
-        antonyms: Array.from(antonyms).map(a => a.innerHTML),
-        alternateSpellings: Array.from(alternateSpellings).map(a => a.innerHTML)
+        word: word && word.innerHTML.toString(),
+        definitions: Array.from(definitions).map(m => m.innerHTML.toString()),
+        headword: headword && headword.innerHTML.toString(),
+        pronunciation: pronunciation && pronunciation.innerHTML.toString(),
+        partOfSpeech: partOfSpeech && partOfSpeech.innerHTML.toString(),
+        synonyms: Array.from(synonyms).map(s => s.innerHTML.toString()),
+        antonyms: Array.from(antonyms).map(a => a.innerHTML.toString()),
+        alternateSpellings: Array.from(alternateSpellings).map(a => a.innerHTML.toString())
     }
 }
 
 const getDefinitionsFor = (letter: string) => {
     const definitions = [];
     const inputFile = `../gcide/CIDE.${letter}`;
-    const document = loadFileToDom(inputFile);
+    const result = loadFileToDom(inputFile);
+    
+    const document = result.window.document;
     const paragraphs = document.querySelectorAll('body > * > p');
     for (const paragraph of paragraphs) {
         const definition = parseDefinition(paragraph);
@@ -60,10 +60,7 @@ const getDefinitionsFor = (letter: string) => {
     return definitions;
 }
 
-// Start JSON file
-fs.writeFileSync(outputFile, `{ "words": [\n`);
-
-for (const letter of letters) {
+const parseAndSaveLetter = (letter: string) => {
     console.log("Parsing", letter);
     const definitions = getDefinitionsFor(letter);
     console.log("Parsed!");
@@ -72,9 +69,25 @@ for (const letter of letters) {
     for (const definition of definitions) {
         fs.appendFileSync(outputFile, JSON.stringify(definition) + ',\n');
     }
-    console.log("Saved!")
+}
+
+console.log("Args", process.argv);
+
+// Start JSON file
+if (process.argv[2] === "start") {
+    fs.writeFileSync(outputFile, `{ "words": [\n`);
+    console.log("Started!");
+}
+
+// Append a letter
+if (process.argv[2] === "append") {
+    parseAndSaveLetter(process.argv[3]);
+    console.log("Appended", process.argv[3]);
 }
 
 // End json file
-fs.appendFileSync(outputFile, "\n] }");
+if (process.argv[2] === "end") {
+    fs.appendFileSync(outputFile, "\n] }");
+    console.log("Ended!");
+}
 
