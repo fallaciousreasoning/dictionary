@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { JSDOM } from 'jsdom';
 import { Definition } from './definition';
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const letters = "X";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const outputFile = `dictionary.json`
 
 const loadFileToDom = (fileName: string) => {
