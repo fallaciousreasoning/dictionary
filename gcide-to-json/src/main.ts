@@ -23,6 +23,9 @@ const saveToJson = (fileName: string, definitions: Definition[]) => {
 
 const parseDefinition = (fromParagraph: Element): Definition => {
     const word = fromParagraph.querySelector('ent');
+    if (!word)
+      return;
+
     const headword = fromParagraph.querySelector('hw');
     const pronunciation = fromParagraph.querySelector('pr');
     const definitions = fromParagraph.querySelectorAll('def');
@@ -40,6 +43,9 @@ const paragraphs = document.querySelectorAll('body > * > p');
 const definitions = [];
 for (const paragraph of paragraphs) {
     const definition = parseDefinition(paragraph);
+    if (!definition)
+      continue;
+      
     definitions.push(definition);
 }
 
