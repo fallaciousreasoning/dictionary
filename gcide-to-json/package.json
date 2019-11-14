@@ -1,0 +1,15 @@
+{
+  "name": "gcide-to-json",
+  "version": "1.0.0",
+  "description": "Convert gcide xml to json",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^15.2.1",
+    "ts-node": "^8.5.0"
+  }
+}
