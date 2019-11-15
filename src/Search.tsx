@@ -22,7 +22,7 @@ export const Search = (props) => {
                 {results.map(r => <div key={r.word}>
                     <h2>{r.word}</h2>
                     {r.definitions && <ul>
-                        {r.definitions.map((d, i) => <li key={i}>{d}</li>)}
+                        {r.definitions.map((d, i) => <li key={i} dangerouslySetInnerHTML={{ __html: d}}/>)}
                     </ul>}
                 </div>)}
             </div>
