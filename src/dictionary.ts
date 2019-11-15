@@ -16,7 +16,7 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
         return;
     }
 
-    const dictionaryResponse = await fetch('/dictionary.json');
+    const dictionaryResponse = await fetch('dictionary.json');
     const json = await dictionaryResponse.json();
 
     for (const word in json) {
