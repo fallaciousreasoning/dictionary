@@ -22,6 +22,7 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
     for (const word in json) {
         words.push(word);
         entries[word] = json[word];
+        entries[word].word = word;
     }
 
     resolve();
