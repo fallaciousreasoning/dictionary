@@ -10,6 +10,9 @@ export const Search = (props) => {
         const query: string = e.target.value;
         setQuery(query);
         setResults(await findByRegex(query))
+        window.history.replaceState({},
+            `Dictionary results for ${query}`,
+            `?query=${encodeURIComponent(query)}`)
     }, []);
 
     useEffect(() => {
