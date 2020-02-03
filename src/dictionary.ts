@@ -1,16 +1,22 @@
 import localForage from 'localforage';
-console.log(globalThis)
 
 const dictionaryName = 'dictionary.json';
+
+export interface Definition {
+    word: string;
+    definition: string;
+    antonyms: string[];
+    synonyms: string[];
+    alternateSpellings: string[];
+}
+
+export type Entry = Definition[] & { word: string };
 
 export const words: string[] = [];
 window['words'] = words;
 
 export const entries: {
-    [word: string]: {
-        word: string;
-        definitions: string[];
-    }
+    [word: string]: Entry;
 } = {};
 window['entries'] = entries;
 
@@ -49,6 +55,10 @@ export const ensureLoaded = async () => {
             }
 
             words.sort();
+
+            // For debugging.
+            globalThis.words = words;
+            globalThis.entries = entries;
 
             resolve();
         });

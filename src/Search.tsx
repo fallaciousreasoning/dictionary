@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { findByRegex } from './dictionary';
+import { SearchResult } from './SearchResult';
 
 
 export const Search = (props) => {
@@ -32,14 +33,9 @@ export const Search = (props) => {
                 onChange={onSearchChanged} />
         </div>
         <div>
-            {results.length ? results.map((r, i) => <div key={i}>
-                <h2>{r.word}</h2>
-                <ul>
-                    {r.map((entry, i) => <li key={i}>
-                        {entry.definition}
-                    </li>)}
-                </ul>
-            </div>) : "No results"}
+            {results.length
+                ? results.map(entry => <SearchResult entry={entry} key={entry.word}/>)
+                : "No results"}
         </div>
     </div>;
 }
