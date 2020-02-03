@@ -1,3 +1,7 @@
+import localForage from 'localforage';
+
+const dictionaryName = 'dictionary.json';
+
 export const words: string[] = [];
 window['words'] = words;
 
@@ -9,6 +13,22 @@ export const entries: {
 } = {};
 window['entries'] = entries;
 
+const getRawWords = async () => {
+    let rawText = await localForage.getItem<string>(dictionaryName);
+    if (!rawText) {
+        const dictionaryResponse = await fetch(dictionaryName);
+        if (!dictionaryResponse.ok)
+            return {};
+
+        // Save the dictionary to disk.
+        rawText = await dictionaryResponse.text();
+
+        await localForage.setItem(dictionaryName, rawText);
+    }
+    
+    return JSON.parse(rawText);
+}
+
 export const ensureLoaded = () => new Promise(async (resolve, reject) => {
     // If we have words, return.
     if (words.length) {
@@ -16,12 +36,11 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
         return;
     }
 
-    const dictionaryResponse = await fetch('dictionary.json');
-    const json = await dictionaryResponse.json();
+    const rawWords = await getRawWords();
 
-    for (const word in json) {
+    for (const word in rawWords) {
         words.push(word);
-        entries[word] = json[word];
+        entries[word] = rawWords[word];
         entries[word].word = word;
     }
 
