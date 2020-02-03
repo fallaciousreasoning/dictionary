@@ -27,8 +27,10 @@ export const Search = (props) => {
 
     return <div>
         <div>
-            <label>Search</label>
-            <input value={query} onChange={onSearchChanged} />
+            <input className="search-box"
+                value={query}
+                placeholder="search for words"
+                onChange={onSearchChanged} />
         </div>
         <div>
             <span>Results:</span>
