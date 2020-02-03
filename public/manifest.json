@@ -23,6 +23,11 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "share_target": {
-    "url_template": "?query={text}"
+    "action": "?query",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "text": "query"
+    }
   }
 }
