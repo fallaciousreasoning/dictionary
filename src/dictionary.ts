@@ -1,4 +1,5 @@
 import localForage from 'localforage';
+console.log(globalThis)
 
 const dictionaryName = 'dictionary.json';
 
@@ -16,7 +17,7 @@ window['entries'] = entries;
 const getRawWords = async () => {
     let rawText = await localForage.getItem<string>(dictionaryName);
     if (!rawText) {
-        const dictionaryResponse = await fetch(dictionaryName);
+        const dictionaryResponse = await fetch('./' + dictionaryName);
         if (!dictionaryResponse.ok)
             return {};
 
