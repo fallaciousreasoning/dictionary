@@ -17,8 +17,7 @@ export const Search = (props) => {
 
     useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search);
-        const paramsQuery = searchParams.get('query');
-        if (!paramsQuery) return;
+        const paramsQuery = decodeURIComponent(searchParams.get('query') || '');
 
         setQuery(paramsQuery);
         findByRegex(paramsQuery).then(setResults);
@@ -33,17 +32,14 @@ export const Search = (props) => {
                 onChange={onSearchChanged} />
         </div>
         <div>
-            <span>Results:</span>
-            <div>
-                {results.map((r, i) => <div key={i}>
-                    <h2>{r.word}</h2>
-                    <ul>
-                        {r.map((entry, i) => <li key={i}>
-                            {entry.definition}
-                        </li>)}
-                    </ul>
-                </div>)}
-            </div>
+            {results.length ? results.map((r, i) => <div key={i}>
+                <h2>{r.word}</h2>
+                <ul>
+                    {r.map((entry, i) => <li key={i}>
+                        {entry.definition}
+                    </li>)}
+                </ul>
+            </div>) : "No results"}
         </div>
     </div>;
 }
