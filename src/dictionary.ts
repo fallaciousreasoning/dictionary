@@ -25,29 +25,35 @@ const getRawWords = async () => {
 
         await localForage.setItem(dictionaryName, rawText);
     }
-    
+
     return JSON.parse(rawText);
 }
 
-export const ensureLoaded = () => new Promise(async (resolve, reject) => {
-    // If we have words, return.
-    if (words.length) {
-        resolve();
-        return;
+let dictionaryLoadPromise: Promise<void>;
+export const ensureLoaded = async () => {
+    if (!dictionaryLoadPromise) {
+        dictionaryLoadPromise = new Promise(async (resolve, reject) => {
+            // If we have words, return.
+            if (words.length) {
+                resolve();
+                return;
+            }
+
+            const rawWords = await getRawWords();
+
+            for (const word in rawWords) {
+                words.push(word);
+                entries[word] = rawWords[word];
+                entries[word].word = word;
+            }
+
+            words.sort();
+
+            resolve();
+        });
     }
-
-    const rawWords = await getRawWords();
-
-    for (const word in rawWords) {
-        words.push(word);
-        entries[word] = rawWords[word];
-        entries[word].word = word;
-    }
-
-    words.sort();
-
-    resolve();
-});
+    return dictionaryLoadPromise;
+}
 
 export const wordExists = async (word: string) => {
     await ensureLoaded();
@@ -78,14 +84,14 @@ class MatchList {
         let insertionIndex = 0;
         while (insertionIndex < this.results.length
             && this.results[insertionIndex].matchPosition <= matchPosition) {
-          insertionIndex++;
+            insertionIndex++;
         }
 
         this.results.splice(insertionIndex, 0, { word, matchPosition })
 
         // If we have too many results, remove the last one.
         if (this.results.length > this.maxResults)
-          this.results.pop();
+            this.results.pop();
     }
 
     toEntries() {
