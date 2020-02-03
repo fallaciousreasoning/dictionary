@@ -44,6 +44,8 @@ export const ensureLoaded = () => new Promise(async (resolve, reject) => {
         entries[word].word = word;
     }
 
+    words.sort();
+
     resolve();
 });
 
@@ -63,21 +65,48 @@ export const findByWildCard = (search: string) => {
 }
 window['findByWildcard'] = findByWildCard;
 
+class MatchList {
+    results: { word: string, matchPosition: number }[];
+    maxResults: number;
+
+    constructor(maxResults: number) {
+        this.results = [];
+        this.maxResults = maxResults;
+    }
+
+    addResult(word: string, matchPosition: number) {
+        let insertionIndex = 0;
+        while (insertionIndex < this.results.length
+            && this.results[insertionIndex].matchPosition <= matchPosition) {
+          insertionIndex++;
+        }
+
+        this.results.splice(insertionIndex, 0, { word, matchPosition })
+
+        // If we have too many results, remove the last one.
+        if (this.results.length > this.maxResults)
+          this.results.pop();
+    }
+
+    toEntries() {
+        return this.results.map(r => entries[r.word]);
+    }
+}
+
 export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
     if (typeof regex === 'string')
         regex = new RegExp(regex, 'i');
 
     await ensureLoaded();
 
-    let result: string[] = [];
+    const matches = new MatchList(maxResults);
     for (const word of words) {
-        if (regex.test(word))
-            result.push(word);
+        const match = regex.exec(word);
+        if (!match) continue;
 
-        if (result.length >= maxResults)
-            break;
+        matches.addResult(word, match.index);
     }
 
-    return result.map(r => entries[r]);
+    return matches.toEntries();
 }
 window['findByRegex'] = findByRegex;
