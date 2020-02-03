@@ -23,7 +23,7 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "share_target": {
-    "action": "../?query",
+    "action": "/dictionary/?query",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params": {
