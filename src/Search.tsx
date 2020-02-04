@@ -1,9 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { findByRegex, Entry, didYouMean } from './dictionary';
 import { SearchResult, WordLink } from './SearchResult';
+import { useDebounce } from './throttle';
 
 export const Search = (props) => {
     const [query, setQuery] = useState('');
+    const debouncedQuery = useDebounce(query, 500);
     const [loading, setLoading] = useState(true);
 
     const [results, setResults] = useState<Entry[]>([]);
@@ -13,6 +15,7 @@ export const Search = (props) => {
         const query: string = e.target.value;
         setQuery(query);
         setLoading(true);
+        setSuggestions([]);
         setResults(await findByRegex(query));
         setLoading(false);
         window.history.replaceState({},
@@ -30,13 +33,11 @@ export const Search = (props) => {
     }, []);
 
     useEffect(() => {
-        setSuggestions([]);
-        
-        if (results.length !== 0)
+        if (results.length !== 0 || query !== debouncedQuery)
           return;
 
-        didYouMean(query).then(setSuggestions);
-    }, [results]);
+        didYouMean(debouncedQuery).then(setSuggestions);
+    }, [debouncedQuery, query, results]);
 
     const showSuggestions = suggestions.length !== 0 && results.length === 0;
 
