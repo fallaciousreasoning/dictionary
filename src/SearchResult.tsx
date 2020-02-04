@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Entry, Definition, entries } from './dictionary';
 
-const WordLink = ({ word }: { word: string }) => {
+export const WordLink = ({ word }: { word: string }) => {
     return <a href={`?query=${word}`}>{word}</a>
 }
 

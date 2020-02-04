@@ -113,6 +113,8 @@ class MatchList {
 }
 
 export const didYouMean = async (query: string, maxResults = 5) => {
+    await ensureLoaded();
+
     const matches = new MatchList(maxResults);
     for (const word of words) {
         const similarity = stringSimilarity.compareTwoStrings(query, word);
@@ -140,10 +142,9 @@ export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
     if (result.length !== 0)
       return result;
 
-    // If the word is already stemmed, see if we can find anything similar.
     const stemmed = stem(regex.source);
     if (stemmed == regex.source)
-      return didYouMean(regex.source);
+      return result;
 
     return findByRegex(stemmed, maxResults);
 }

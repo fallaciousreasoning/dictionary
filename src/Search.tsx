@@ -1,12 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { findByRegex, Entry } from './dictionary';
-import { SearchResult } from './SearchResult';
+import { findByRegex, Entry, didYouMean } from './dictionary';
+import { SearchResult, WordLink } from './SearchResult';
 
 export const Search = (props) => {
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(true);
 
     const [results, setResults] = useState<Entry[]>([]);
+    const [suggestions, setSuggestions] = useState<Entry[]>([]);
+
     const onSearchChanged = useCallback(async e => {
         const query: string = e.target.value;
         setQuery(query);
@@ -27,6 +29,17 @@ export const Search = (props) => {
         return () => { }
     }, []);
 
+    useEffect(() => {
+        setSuggestions([]);
+        
+        if (results.length !== 0)
+          return;
+
+        didYouMean(query).then(setSuggestions);
+    }, [results]);
+
+    const showSuggestions = suggestions.length !== 0 && results.length === 0;
+
     return <div>
         <div className="search-header">
             <input className="search-box"
@@ -39,6 +52,12 @@ export const Search = (props) => {
             {(!loading && results.length === 0
                 ? <h2>No results</h2>
                 : results.map(entry => <SearchResult entry={entry} key={entry.word} />))}
+            {showSuggestions && <div>
+                <h2>Did you mean:</h2>
+                <ul>
+                    {suggestions.map(s => <li key={s.word}><WordLink word={s.word}/></li>)}
+                </ul>
+            </div>}
             {loading && <div className="spinner" />}
         </div>
     </div>;
