@@ -6,3 +6,11 @@ body {
   width: 100%;
   font-size: 1.2em;
 }
+
+.search-header {
+  position: sticky;
+  background: white;
+  top: 0;
+  margin: -8px;
+  padding: 8px;
+}

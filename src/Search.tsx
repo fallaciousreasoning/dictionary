@@ -26,8 +26,9 @@ export const Search = (props) => {
     }, []);
 
     return <div>
-        <div>
+        <div className="search-header">
             <input className="search-box"
+                type="search"
                 value={query}
                 placeholder="search for words"
                 onChange={onSearchChanged} />
