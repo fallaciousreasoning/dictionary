@@ -1,12 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { findByRegex } from './dictionary';
+import { findByRegex, Entry } from './dictionary';
 import { SearchResult } from './SearchResult';
-
 
 export const Search = (props) => {
     const [query, setQuery] = useState('');
 
-    const [results, setResults] = useState<any[]>([]);
+    const [results, setResults] = useState<Entry[] | undefined>(undefined);
     const onSearchChanged = useCallback(async e => {
         const query: string = e.target.value;
         setQuery(query);
@@ -34,9 +33,10 @@ export const Search = (props) => {
                 onChange={onSearchChanged} />
         </div>
         <div>
-            {results.length
-                ? results.map(entry => <SearchResult entry={entry} key={entry.word}/>)
-                : <div className="spinner"/>}
+            {results === undefined ? <div className="spinner"/>
+                : (results.length === 0
+                    ? <h2>No results</h2>
+                    : results.map(entry => <SearchResult entry={entry} key={entry.word}/>))}
         </div>
     </div>;
 }
