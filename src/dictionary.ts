@@ -1,5 +1,6 @@
 import localForage from 'localforage';
 import stem from 'stem-porter';
+import stringSimilarity from 'string-similarity';
 
 const dictionaryName = 'dictionary.json';
 
@@ -84,7 +85,7 @@ export const findByWildCard = (search: string) => {
 window['findByWildcard'] = findByWildCard;
 
 class MatchList {
-    results: { word: string, matchPosition: number }[];
+    results: { word: string, matchGoodness: number }[];
     maxResults: number;
 
     constructor(maxResults: number) {
@@ -95,11 +96,11 @@ class MatchList {
     addResult(word: string, matchPosition: number) {
         let insertionIndex = 0;
         while (insertionIndex < this.results.length
-            && this.results[insertionIndex].matchPosition <= matchPosition) {
+            && this.results[insertionIndex].matchGoodness <= matchPosition) {
             insertionIndex++;
         }
 
-        this.results.splice(insertionIndex, 0, { word, matchPosition })
+        this.results.splice(insertionIndex, 0, { word, matchGoodness: matchPosition })
 
         // If we have too many results, remove the last one.
         if (this.results.length > this.maxResults)
@@ -109,6 +110,16 @@ class MatchList {
     toEntries() {
         return this.results.map(r => entries[r.word]);
     }
+}
+
+export const didYouMean = async (query: string, maxResults = 5) => {
+    const matches = new MatchList(maxResults);
+    for (const word of words) {
+        const similarity = stringSimilarity.compareTwoStrings(query, word);
+        matches.addResult(word, -similarity);
+    }
+
+    return matches.toEntries();
 }
 
 export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
@@ -129,9 +140,10 @@ export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
     if (result.length !== 0)
       return result;
 
+    // If the word is already stemmed, see if we can find anything similar.
     const stemmed = stem(regex.source);
     if (stemmed == regex.source)
-      return result;
+      return didYouMean(regex.source);
 
     return findByRegex(stemmed, maxResults);
 }
