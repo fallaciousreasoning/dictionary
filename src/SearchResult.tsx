@@ -19,7 +19,7 @@ const Related = ({ definition }: { definition: Definition }) => {
 }
 
 export const SearchResult = ({ entry }: { entry: Entry }) => {
-    return <div>
+    return <div className="search-result">
         <h2>{entry.word}</h2>
         <ul>
             {entry.map((d, i) => <li key={i}>
