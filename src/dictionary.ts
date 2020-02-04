@@ -1,4 +1,5 @@
 import localForage from 'localforage';
+import stem from 'stem-porter';
 
 const dictionaryName = 'dictionary.json';
 
@@ -124,6 +125,14 @@ export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
         matches.addResult(word, match.index);
     }
 
-    return matches.toEntries();
+    const result = matches.toEntries();
+    if (result.length !== 0)
+      return result;
+
+    const stemmed = stem(regex.source);
+    if (stemmed == regex.source)
+      return result;
+
+    return findByRegex(stemmed, maxResults);
 }
 window['findByRegex'] = findByRegex;
