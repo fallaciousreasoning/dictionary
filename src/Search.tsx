@@ -36,7 +36,7 @@ export const Search = (props) => {
         <div>
             {results.length
                 ? results.map(entry => <SearchResult entry={entry} key={entry.word}/>)
-                : "No results"}
+                : <div className="spinner"/>}
         </div>
     </div>;
 }
