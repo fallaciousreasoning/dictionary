@@ -5,19 +5,6 @@ export const WordLink = ({ word }: { word: string }) => {
     return <a href={`?query=${word}`}>{word}</a>
 }
 
-const Related = ({ definition }: { definition: Definition }) => {
-    const related = [...(definition.antonyms || []), ...(definition.synonyms || [])];
-    if (!related.length)
-        return null;
-
-    return <>
-        <b>See Also: </b> {related.map((r, i) => <>
-            {i !== 0 && ", "}
-            <WordLink key={r} word={r} />
-        </>)}
-    </>
-}
-
 const Def = ({ definition }: { definition: string }) => {
     if (!definition)
       return null;
