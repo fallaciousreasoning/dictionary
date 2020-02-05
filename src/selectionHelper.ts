@@ -34,20 +34,20 @@ export const getSelectedWord = () => {
     return { word: word, rect: range.getBoundingClientRect() };
 }
 
-let rect: { top: number, left: number, bottom: number, right: number, width: number, height: number };
-const rectListeners: any[] = [];
+let selected: { word: string, rect: ClientRect };
+const selectedListeners: any[] = [];
 
-export const useSelectionRect = () => {
-    const [ r, setR ] = useState(rect);
+export const useSelectedWord = () => {
+    const [ r, setR ] = useState<typeof selected | null>(null);
 
     useEffect(() => {
-        rectListeners.push(setR);
+        selectedListeners.push(setR);
 
         return () => {
-            const removeAt = rectListeners.indexOf(setR);
+            const removeAt = selectedListeners.indexOf(setR);
             if (removeAt === -1) return;
 
-            rectListeners.splice(removeAt, 1);
+            selectedListeners.splice(removeAt, 1);
         } 
     });
 
@@ -56,9 +56,7 @@ export const useSelectionRect = () => {
 
 document.addEventListener('selectionchange', () => {
     const selected = getSelectedWord();
-    const rect = selected ? selected.rect : null;
-
-    for (const listener of rectListeners) {
-        listener(rect);
+    for (const listener of selectedListeners) {
+        listener(selected);
     }
 })
