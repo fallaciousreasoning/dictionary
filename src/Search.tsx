@@ -2,35 +2,45 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { findByRegex, Entry, didYouMean } from './dictionary';
 import { SearchResult, WordLink } from './SearchResult';
 import { useDebounce } from './throttle';
+import { useQueryString } from './history';
 
 export const Search = (props) => {
     const [query, setQuery] = useState('');
+    const locationQueryString = useQueryString();
+
     const debouncedQuery = useDebounce(query, 500);
     const [loading, setLoading] = useState(true);
 
     const [results, setResults] = useState<Entry[]>([]);
     const [suggestions, setSuggestions] = useState<Entry[]>([]);
 
+    const updateResults = async (q?) => {
+        if (!q) q = query;
+
+        setLoading(true);
+        setSuggestions([]);
+        setResults(await findByRegex(q));
+        setLoading(false);
+        window.history.replaceState({},
+            `Dictionary results for ${q}`,
+            `?query=${encodeURIComponent(q)}`);
+    }
+
     const onSearchChanged = useCallback(async e => {
         const query: string = e.target.value;
         setQuery(query);
-        setLoading(true);
-        setSuggestions([]);
-        setResults(await findByRegex(query));
-        setLoading(false);
-        window.history.replaceState({},
-            `Dictionary results for ${query}`,
-            `?query=${encodeURIComponent(query)}`)
+
+        await updateResults(query);
     }, []);
 
+    // When location.search changes, update the search results.
     useEffect(() => {
-        const searchParams = new URLSearchParams(window.location.search);
+        const searchParams = new URLSearchParams(locationQueryString);
         const paramsQuery = decodeURIComponent(searchParams.get('query') || '');
 
         setQuery(paramsQuery);
-        findByRegex(paramsQuery).then(setResults).then(() => setLoading(false));
-        return () => { }
-    }, []);
+        updateResults(paramsQuery);
+    }, [query, locationQueryString]);
 
     useEffect(() => {
         if (results.length !== 0 || query !== debouncedQuery)
