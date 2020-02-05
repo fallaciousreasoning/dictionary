@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 
-let sneakH = window.history;
 var _wr = function(type) {
-    var orig = sneakH[type];
+    var orig = window.history[type];
     return function() {
-        var rv = orig.apply(sneakH, arguments);
+        var rv = orig.apply(window.history, arguments);
         var e = new Event(type);
         e['arguments'] = arguments;
         window.dispatchEvent(e);
         return rv;
     };
 };
-sneakH.pushState = _wr('pushState');
-sneakH.replaceState = _wr('replaceState');
+window.history.pushState = _wr('pushState');
+window.history.replaceState = _wr('replaceState');
 
 const locationListeners: any[] = [];
 export const useQueryString = () => {
