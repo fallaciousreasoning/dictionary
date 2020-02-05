@@ -18,12 +18,27 @@ const Related = ({ definition }: { definition: Definition }) => {
     </>
 }
 
+const Def = ({ definition }: { definition: string }) => {
+    if (!definition)
+      return null;
+
+    const linkPrefix = '___'
+    let parts = definition.split(/(___\w+)/g).map((w, i) => <React.Fragment key={i}>
+        {w.startsWith(linkPrefix)
+            ? <WordLink word={w.substring(linkPrefix.length)}/>
+            : w}
+    </React.Fragment>);
+    return <>
+      {parts}
+    </>
+};
+
 export const SearchResult = ({ entry }: { entry: Entry }) => {
     return <div className="search-result">
         <h2>{entry.word}</h2>
         <ul>
             {entry.map((d, i) => <li key={i}>
-                {d.definition}
+                <Def definition={d.definition}/>
                 {/* <br />
                 <Related definition={d} /> */}
             </li>)}
