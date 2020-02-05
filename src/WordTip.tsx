@@ -30,7 +30,7 @@ export const WordTip = ({ word }: { word: string }) => {
     const virtualRef = new VirtualReference(selected.rect);
     return <Popper referenceElement={virtualRef} placement="bottom">
         {({ ref, style, placement }) => <div ref={ref} style={style} data-placement={placement}>
-            <button onClick={() => window.history.pushState(null, "Dictionary", `?query=${selected.word}`)}>
+            <button onClick={() => window.history.pushState(null, "Dictionary", `?query=${encodeURIComponent(selected.word)}`)}>
                 Search
             </button>
         </div>}
