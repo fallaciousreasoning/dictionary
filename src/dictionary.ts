@@ -51,9 +51,11 @@ export const ensureLoaded = async () => {
             const rawWords = await getRawWords();
 
             for (const word in rawWords) {
-                words.push(word);
-                entries[word] = rawWords[word];
-                entries[word].word = word;
+                let lowered = word.toLowerCase();
+
+                words.push(lowered);
+                entries[lowered] = rawWords[word];
+                entries[lowered].word = lowered;
             }
 
             words.sort();
@@ -143,7 +145,7 @@ export const findByRegex = async (regex: RegExp | string, maxResults = 100) => {
       return result;
 
     const stemmed = stem(regex.source);
-    if (stemmed == regex.source)
+    if (stemmed === regex.source)
       return result;
 
     return findByRegex(stemmed, maxResults);
