@@ -38,13 +38,16 @@ export const Search = (props) => {
         const searchParams = new URLSearchParams(locationQueryString);
         const paramsQuery = decodeURIComponent(searchParams.get('query') || '');
 
+        if (paramsQuery === query)
+            return;
+            
         setQuery(paramsQuery);
         updateResults(paramsQuery);
-    }, [query, locationQueryString]);
+    }, [locationQueryString]);
 
     useEffect(() => {
         if (results.length !== 0 || query !== debouncedQuery)
-          return;
+            return;
 
         didYouMean(debouncedQuery).then(setSuggestions);
     }, [debouncedQuery, query, results]);
@@ -66,7 +69,7 @@ export const Search = (props) => {
             {showSuggestions && <div>
                 <h2>Did you mean:</h2>
                 <ul>
-                    {suggestions.map(s => <li key={s.word}><WordLink word={s.word}/></li>)}
+                    {suggestions.map(s => <li key={s.word}><WordLink word={s.word} /></li>)}
                 </ul>
             </div>}
             {loading && <div className="spinner" />}
