@@ -3,8 +3,16 @@ import { Entry, Definition, entries } from './dictionary';
 
 import "./selectionHelper";
 
+const wordLinkClickHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (e.ctrlKey)
+      return;
+
+    e.preventDefault();
+    window.history.pushState(null, "", e.currentTarget.href)
+};
+
 export const WordLink = ({ word }: { word: string }) => {
-    return <a href={`?query=${word}`}>{word}</a>
+    return <a href={`?query=${word}`} onClick={wordLinkClickHandler}>{word}</a>
 }
 
 const Def = ({ definition }: { definition: string }) => {
