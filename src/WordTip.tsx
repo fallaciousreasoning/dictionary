@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { useSelectedWord } from "./selectionHelper";
 import { Popper } from 'react-popper';
 
@@ -24,13 +24,17 @@ class VirtualReference {
 
 export const WordTip = ({ word }: { word: string }) => {
     const selected = useSelectedWord();
+    const searchCallback = useCallback(() =>
+        window.history.pushState(null, "Dictionary", `?query=${encodeURIComponent(selected ? selected.word : '')}`),
+        [selected]);
+        
     if (!selected)
       return null;
 
     const virtualRef = new VirtualReference(selected.rect);
     return <Popper referenceElement={virtualRef} placement="bottom">
         {({ ref, style, placement }) => <div ref={ref} style={style} data-placement={placement}>
-            <button onClick={() => window.history.pushState(null, "Dictionary", `?query=${encodeURIComponent(selected.word)}`)}>
+            <button onClick={searchCallback}>
                 Search
             </button>
         </div>}
