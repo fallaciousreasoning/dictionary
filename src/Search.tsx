@@ -45,12 +45,18 @@ export const Search = (props) => {
         updateResults(paramsQuery);
     }, [locationQueryString]);
 
+    // Get suggestions if the user has stopped typing and there are no results.
     useEffect(() => {
         if (results.length !== 0 || query !== debouncedQuery || !query.length)
             return;
 
         didYouMean(debouncedQuery).then(setSuggestions);
     }, [debouncedQuery, query, results]);
+
+    // On initial load, display some words.
+    useEffect(() => {
+      updateResults();
+    }, []);
 
     const showSuggestions = suggestions.length !== 0 && results.length === 0;
 
