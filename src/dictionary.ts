@@ -51,6 +51,10 @@ export const ensureLoaded = async () => {
             const rawWords = await getRawWords();
 
             for (const word in rawWords) {
+                // Ignore words with no definitions (for now).
+                if (rawWords.length === 0 || !(rawWords[word] as Entry).some(d => d.definition))
+                  continue;
+
                 let lowered = word.toLowerCase();
 
                 words.push(lowered);
