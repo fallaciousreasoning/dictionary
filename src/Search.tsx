@@ -46,7 +46,7 @@ export const Search = (props) => {
     }, [locationQueryString]);
 
     useEffect(() => {
-        if (results.length !== 0 || query !== debouncedQuery)
+        if (results.length !== 0 || query !== debouncedQuery || !query.length)
             return;
 
         didYouMean(debouncedQuery).then(setSuggestions);
