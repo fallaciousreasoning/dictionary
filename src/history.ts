@@ -37,3 +37,4 @@ const onLocationChanged = () => {
 window.addEventListener('pushState', onLocationChanged);
 window.addEventListener('replaceState', onLocationChanged);
 window.addEventListener('hashchange', onLocationChanged);
+window.addEventListener('popstate', onLocationChanged);
