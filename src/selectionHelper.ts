@@ -22,7 +22,7 @@ export const getSelectedWord = () => {
 
     const selectionText = selection.toString();
 
-    const words = selectionText.split(' ');
+    const words = selectionText.split(' ').filter(t => t);
     if (words.length !== 1)
         return null;
 
