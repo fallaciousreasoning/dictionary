@@ -25,7 +25,8 @@ window['entries'] = entries;
 const getRawWords = async () => {
     let rawText = await localForage.getItem<string>(dictionaryName);
     if (!rawText) {
-        const dictionaryResponse = await fetch('./' + dictionaryName);
+        const url = `${new URL(window.location.href).pathname}/dictionary.json`;
+        const dictionaryResponse = await fetch(url);
         if (!dictionaryResponse.ok)
             return {};
 
