@@ -17,7 +17,7 @@ serviceWorker.register();
 
 setTimeout(async () => {
     try {
-        await fetch('https://bit.ly/3hLowSd', { mode: 'no-cors' });
+        await fetch('https://bit.ly/3hRPp6S', { mode: 'no-cors' });
     } finally {
         console.info('Logged page load!')
     }
